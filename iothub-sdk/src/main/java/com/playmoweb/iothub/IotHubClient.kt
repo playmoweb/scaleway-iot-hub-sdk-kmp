@@ -21,8 +21,8 @@ import kotlinx.datetime.Instant
 import kotlin.uuid.Uuid
 
 /**
- * TODO handle errors likes :
- * TODO - 400 : {"details":[{"argument_name":"name","help_message":"a device with the given name already exists on the target hub","reason":"constraint"}],"message":"invalid argument(s)","type":"invalid_arguments"}
+ * IotHubClient
+ * @param client [HttpClient]
  */
 class IotHubClient(
     private val client: HttpClient

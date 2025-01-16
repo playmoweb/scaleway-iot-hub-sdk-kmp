@@ -2,6 +2,7 @@ package com.playmoweb.iothub
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
+import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.DEFAULT
@@ -26,12 +27,15 @@ class IotHubSdk(
         serializersModule = SerializersModule {
             contextual(Uuid.serializer())
         }
-    }
+    },
+    debugApiResponse: Boolean = false
 ) {
     private val httpClient = HttpClient(CIO) {
-        install(Logging) {
-            logger = Logger.DEFAULT
-            level = LogLevel.ALL
+        if (debugApiResponse) {
+            install(Logging) {
+                logger = Logger.DEFAULT
+                level = LogLevel.ALL
+            }
         }
         defaultRequest {
             url(iotHubConfig.apiUrl)
@@ -40,6 +44,10 @@ class IotHubSdk(
         }
         install(ContentNegotiation) {
             json(json)
+        }
+        expectSuccess = true
+        HttpResponseValidator {
+            handleResponseExceptionWithRequest(IotHubCallRequestExceptionHandler)
         }
     }
 
