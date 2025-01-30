@@ -1,19 +1,19 @@
 package com.playmoweb.iothub
 
-import com.playmoweb.iothub.model.AddDeviceRequestBody
-import com.playmoweb.iothub.model.AddDeviceResponse
-import com.playmoweb.iothub.model.Device
-import com.playmoweb.iothub.model.DeviceCertificateResponse
-import com.playmoweb.iothub.model.DeviceMetrics
-import com.playmoweb.iothub.model.ListDevicesResponse
-import com.playmoweb.iothub.model.UpdateDeviceRequestBody
+import com.playmoweb.iothub.model.device.AddDeviceRequestBody
+import com.playmoweb.iothub.model.device.AddDeviceResponse
+import com.playmoweb.iothub.model.device.Device
+import com.playmoweb.iothub.model.device.DeviceCertificateResponse
+import com.playmoweb.iothub.model.device.DeviceMetrics
+import com.playmoweb.iothub.model.device.ListDevicesResponse
+import com.playmoweb.iothub.model.device.UpdateDeviceRequestBody
 import io.ktor.client.statement.HttpResponse
 import kotlinx.datetime.Instant
 import kotlin.uuid.Uuid
 
 interface DeviceClient {
     /**
-     * Get devices
+     * List devices
      * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-devices-list-devices)
      * @return [ListDevicesResponse]
      */

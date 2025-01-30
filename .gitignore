@@ -2,4 +2,4 @@
 build
 .idea
 local.properties
-iothub-sdk/src/test/java/com/playmoweb/iothub/IotHubClientTest.kt
+iothub-sdk/src/test/java/com/playmoweb/iothub/*.kt
