@@ -6,21 +6,40 @@ import com.playmoweb.iothub.device.model.AddDeviceRequestBody
 import com.playmoweb.iothub.device.model.AddDeviceResponse
 import com.playmoweb.iothub.device.model.Device
 import com.playmoweb.iothub.device.model.DeviceCertificateResponse
-import com.playmoweb.iothub.model.Metrics
+import com.playmoweb.iothub.device.model.DeviceOrderBy
+import com.playmoweb.iothub.device.model.DeviceStatus
 import com.playmoweb.iothub.device.model.ListDevicesResponse
 import com.playmoweb.iothub.device.model.UpdateDeviceRequestBody
+import com.playmoweb.iothub.model.Metrics
 import io.ktor.client.statement.HttpResponse
 import kotlinx.datetime.Instant
 import kotlin.uuid.Uuid
 
 interface DeviceClient {
+
+    companion object {
+        const val MAXIMUM_PAGE_SIZE = 100
+    }
+
     /**
      * List devices
      * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-devices-list-devices)
+     * @param page [Int] Default is 1
+     * @param pageSize [Int] Default is 100, Maximum is 100
+     * @param orderBy [DeviceOrderBy] Default is NAME_ASC
+     * @param hubId [Uuid] Default is null
+     * @param allowInsecure [Boolean] Default is null
+     * @param status [DeviceStatus] Default is null
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [ListDevicesResponse]
      */
     suspend fun listDevices(
+        page: Int = 1,
+        pageSize: Int = MAXIMUM_PAGE_SIZE,
+        orderBy: DeviceOrderBy = DeviceOrderBy.NAME_ASC,
+        hubId: Uuid? = null,
+        allowInsecure: Boolean? = null,
+        status: DeviceStatus? = null,
         region: IotHubRegion = IotHubClient.DEFAULT_REGION
     ): ListDevicesResponse
 

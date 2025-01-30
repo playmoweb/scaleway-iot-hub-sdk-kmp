@@ -41,7 +41,7 @@ data class Device(
     @Contextual val id: Uuid,
     val name: String,
     val description: String,
-    val status: String,
+    val status: DeviceStatus,
     @SerialName("hub_id") @Contextual val hubId: Uuid,
     @SerialName("last_activity_at") val lastActivityAt: Instant,
     @SerialName("is_connected") val isConnected: Boolean,

@@ -1,10 +1,13 @@
 package com.playmoweb.iothub.hub
 
+import com.playmoweb.iothub.IotHubClient
 import com.playmoweb.iothub.IotHubRegion
+import com.playmoweb.iothub.hub.HubClient.Companion.MAXIMUM_PAGE_SIZE
 import com.playmoweb.iothub.model.Metrics
 import com.playmoweb.iothub.hub.model.CertificateAuthority
 import com.playmoweb.iothub.hub.model.CreateHubRequestBody
 import com.playmoweb.iothub.hub.model.Hub
+import com.playmoweb.iothub.hub.model.HubOrderBy
 import com.playmoweb.iothub.hub.model.ListHubsResponse
 import com.playmoweb.iothub.hub.model.SetCertificateAuthorityBody
 import com.playmoweb.iothub.hub.model.UpdateHubRequestBody
@@ -12,6 +15,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -30,9 +34,33 @@ class IotHubHubClient(
     /**
      * List hubs
      * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-list-hubs)
+     * @param page [Int] Default is 1
+     * @param pageSize [Int] Default is 100, Maximum is 100
+     * @param orderBy [HubOrderBy] Default is NAME_ASC
+     * @param projectId [Uuid] Default is null
+     * @param organizationId [Uuid] Default is null
+     * @param name [String] Default is null
+     * @param region [IotHubRegion] Default is FR_PAR
      * @return [ListHubsResponse]
      */
-    override suspend fun listHubs(region: IotHubRegion): ListHubsResponse = client.get("${region.region}$HUB_ROUTE_PATH").body()
+    override suspend fun listHubs(
+        page: Int,
+        pageSize: Int,
+        orderBy: HubOrderBy,
+        projectId: Uuid?,
+        organizationId: Uuid?,
+        name: String?,
+        region: IotHubRegion
+    ): ListHubsResponse = client
+        .get("${region.region}$HUB_ROUTE_PATH") {
+            parameter("page", page)
+            parameter("page_size", pageSize)
+            parameter("order_by", orderBy.value)
+            projectId?.let { parameter("project_id", it) }
+            organizationId?.let { parameter("organization_id", it) }
+            name?.let { parameter("name", it) }
+        }
+        .body()
 
     /**
      * Create a hub

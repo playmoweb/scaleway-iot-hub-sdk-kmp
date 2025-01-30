@@ -6,6 +6,7 @@ import com.playmoweb.iothub.model.Metrics
 import com.playmoweb.iothub.hub.model.CertificateAuthority
 import com.playmoweb.iothub.hub.model.CreateHubRequestBody
 import com.playmoweb.iothub.hub.model.Hub
+import com.playmoweb.iothub.hub.model.HubOrderBy
 import com.playmoweb.iothub.hub.model.ListHubsResponse
 import com.playmoweb.iothub.hub.model.SetCertificateAuthorityBody
 import com.playmoweb.iothub.hub.model.UpdateHubRequestBody
@@ -14,13 +15,30 @@ import kotlinx.datetime.Instant
 import kotlin.uuid.Uuid
 
 interface HubClient {
+
+    companion object {
+        const val MAXIMUM_PAGE_SIZE = 100
+    }
+
     /**
      * List hubs
      * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-list-hubs)
+     * @param page [Int] Default is 1
+     * @param pageSize [Int] Default is 100, Maximum is 100
+     * @param orderBy [HubOrderBy] Default is NAME_ASC
+     * @param projectId [Uuid] Default is null
+     * @param organizationId [Uuid] Default is null
+     * @param name [String] Default is null
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [ListHubsResponse]
      */
     suspend fun listHubs(
+        page: Int = 1,
+        pageSize: Int = MAXIMUM_PAGE_SIZE,
+        orderBy: HubOrderBy = HubOrderBy.NAME_ASC,
+        projectId: Uuid? = null,
+        organizationId: Uuid? = null,
+        name: String? = null,
         region: IotHubRegion = IotHubClient.DEFAULT_REGION
     ): ListHubsResponse
 

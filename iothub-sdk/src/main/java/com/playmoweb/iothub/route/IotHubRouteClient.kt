@@ -1,20 +1,20 @@
 package com.playmoweb.iothub.route
 
-import com.playmoweb.iothub.IotHubClient
 import com.playmoweb.iothub.IotHubRegion
 import com.playmoweb.iothub.route.model.CreateRouteRequestBody
 import com.playmoweb.iothub.route.model.ListRoutesResponse
 import com.playmoweb.iothub.route.model.Route
+import com.playmoweb.iothub.route.model.RouteOrderBy
 import com.playmoweb.iothub.route.model.UpdateRouteRequestBody
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
+import io.ktor.client.request.parameter
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.bodyAsText
 import kotlin.uuid.Uuid
 
 class IotHubRouteClient(
@@ -28,13 +28,27 @@ class IotHubRouteClient(
     /**
      * List routes
      * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-routes-list-routes)
+     * @param page [Int] Default is 1
+     * @param pageSize [Int] Default is 100, Maximum is 100
+     * @param orderBy [RouteOrderBy] Default is NAME_ASC
+     * @param hubId [Uuid] Default is null
+     * @param name [String] Default is null
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [ListRoutesResponse]
      */
     override suspend fun listRoutes(
+        page: Int,
+        pageSize: Int,
+        orderBy: RouteOrderBy,
+        hubId: Uuid?,
+        name: String?,
         region: IotHubRegion
-    ): ListRoutesResponse = client.get("${region.region}${ROUTE_ROUTE_PATH}").apply {
-        println("listRoutes: ${bodyAsText()}")
+    ): ListRoutesResponse = client.get("${region.region}${ROUTE_ROUTE_PATH}") {
+        parameter("page", page)
+        parameter("page_size", pageSize)
+        parameter("order_by", orderBy.value)
+        hubId?.let { parameter("hub_id", it) }
+        name?.let { parameter("name", it) }
     }.body()
 
     /**

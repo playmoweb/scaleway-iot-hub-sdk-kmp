@@ -1,22 +1,38 @@
 package com.playmoweb.iothub.route
 
-import com.playmoweb.iothub.IotHubRegion
 import com.playmoweb.iothub.IotHubClient
+import com.playmoweb.iothub.IotHubRegion
 import com.playmoweb.iothub.route.model.CreateRouteRequestBody
 import com.playmoweb.iothub.route.model.ListRoutesResponse
 import com.playmoweb.iothub.route.model.Route
+import com.playmoweb.iothub.route.model.RouteOrderBy
 import com.playmoweb.iothub.route.model.UpdateRouteRequestBody
 import io.ktor.client.statement.HttpResponse
 import kotlin.uuid.Uuid
 
 interface RouteClient {
+
+    companion object {
+        const val MAXIMUM_PAGE_SIZE = 100
+    }
+
     /**
      * List routes
      * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-routes-list-routes)
+     * @param page [Int] Default is 1
+     * @param pageSize [Int] Default is 100, Maximum is 100
+     * @param orderBy [RouteOrderBy] Default is NAME_ASC
+     * @param hubId [Uuid] Default is null
+     * @param name [String] Default is null
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [ListRoutesResponse]
      */
     suspend fun listRoutes(
+        page: Int = 1,
+        pageSize: Int = MAXIMUM_PAGE_SIZE,
+        orderBy: RouteOrderBy = RouteOrderBy.NAME_ASC,
+        hubId: Uuid? = null,
+        name: String? = null,
         region: IotHubRegion = IotHubClient.DEFAULT_REGION
     ): ListRoutesResponse
 
