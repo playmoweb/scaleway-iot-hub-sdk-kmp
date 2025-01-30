@@ -1,8 +1,10 @@
 package com.playmoweb.iothub
 
+import com.playmoweb.iothub.model.hub.CertificateAuthority
 import com.playmoweb.iothub.model.hub.CreateHubRequestBody
 import com.playmoweb.iothub.model.hub.Hub
 import com.playmoweb.iothub.model.hub.ListHubsResponse
+import com.playmoweb.iothub.model.hub.SetCertificateAuthorityBody
 import com.playmoweb.iothub.model.hub.UpdateHubRequestBody
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -65,7 +67,29 @@ class IotHubHubClient(
      * Delete a hub
      * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-delete-a-hub)
      * @param hubId [Uuid]
+     * @param region [IotHubRegion] Default is FR_PAR
      * @return [HttpResponse]
      */
     override suspend fun deleteHub(hubId: Uuid, region: IotHubRegion): HttpResponse = client.delete("${region.region}$HUB_ROUTE_PATH/$hubId")
+
+    /**
+     * Get the certificate authority of a hub
+     * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-get-the-certificate-authority-of-a-hub)
+     * @param hubId [Uuid]
+     * @param region [IotHubRegion] Default is FR_PAR
+     * @return [CertificateAuthority]
+     */
+    override suspend fun getHubCertificateAuthority(hubId: Uuid, region: IotHubRegion): CertificateAuthority = client.get("${region.region}$HUB_ROUTE_PATH/$hubId/ca").body()
+
+    /**
+     * Set the certificate authority of a hub
+     * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-set-the-certificate-authority-of-a-hub)
+     * @param hubId [Uuid]
+     * @param certificate [SetCertificateAuthorityBody]
+     * @param region [IotHubRegion] Default is FR_PAR
+     * @return [Hub]
+     */
+    override suspend fun setHubCertificateAuthority(hubId: Uuid, certificate: SetCertificateAuthorityBody, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/ca") {
+        setBody(certificate)
+    }.body()
 }
