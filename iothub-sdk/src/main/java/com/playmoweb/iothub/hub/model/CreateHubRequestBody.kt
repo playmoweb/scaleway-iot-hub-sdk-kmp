@@ -1,4 +1,4 @@
-package com.playmoweb.iothub.model.hub
+package com.playmoweb.iothub.hub.model
 
 import com.playmoweb.iothub.IotHubProductPlan
 import kotlinx.serialization.Contextual

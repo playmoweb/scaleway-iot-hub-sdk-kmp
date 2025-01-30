@@ -1,12 +1,14 @@
-package com.playmoweb.iothub
+package com.playmoweb.iothub.device
 
-import com.playmoweb.iothub.model.device.AddDeviceRequestBody
-import com.playmoweb.iothub.model.device.AddDeviceResponse
-import com.playmoweb.iothub.model.device.Device
-import com.playmoweb.iothub.model.device.DeviceCertificateResponse
+import com.playmoweb.iothub.IotHubClient
+import com.playmoweb.iothub.IotHubRegion
+import com.playmoweb.iothub.device.model.AddDeviceRequestBody
+import com.playmoweb.iothub.device.model.AddDeviceResponse
+import com.playmoweb.iothub.device.model.Device
+import com.playmoweb.iothub.device.model.DeviceCertificateResponse
 import com.playmoweb.iothub.model.Metrics
-import com.playmoweb.iothub.model.device.ListDevicesResponse
-import com.playmoweb.iothub.model.device.UpdateDeviceRequestBody
+import com.playmoweb.iothub.device.model.ListDevicesResponse
+import com.playmoweb.iothub.device.model.UpdateDeviceRequestBody
 import io.ktor.client.statement.HttpResponse
 import kotlinx.datetime.Instant
 import kotlin.uuid.Uuid

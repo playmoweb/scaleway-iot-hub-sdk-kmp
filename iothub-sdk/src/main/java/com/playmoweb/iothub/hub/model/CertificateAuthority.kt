@@ -1,10 +1,9 @@
-package com.playmoweb.iothub.model.hub
+package com.playmoweb.iothub.hub.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SetCertificateAuthorityBody(
+data class CertificateAuthority(
     @SerialName("ca_cert_pem") val certificatePem: String,
-    @SerialName("challenge_cert_pem") val challengePem: String,
 )

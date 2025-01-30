@@ -1,4 +1,4 @@
-package com.playmoweb.iothub.model.device
+package com.playmoweb.iothub.device.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

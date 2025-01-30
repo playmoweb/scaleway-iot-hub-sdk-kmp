@@ -1,37 +1,28 @@
-package com.playmoweb.iothub
+package com.playmoweb.iothub.hub
 
+import com.playmoweb.iothub.IotHubClient
+import com.playmoweb.iothub.IotHubRegion
 import com.playmoweb.iothub.model.Metrics
-import com.playmoweb.iothub.model.hub.CertificateAuthority
-import com.playmoweb.iothub.model.hub.CreateHubRequestBody
-import com.playmoweb.iothub.model.hub.Hub
-import com.playmoweb.iothub.model.hub.ListHubsResponse
-import com.playmoweb.iothub.model.hub.SetCertificateAuthorityBody
-import com.playmoweb.iothub.model.hub.UpdateHubRequestBody
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.request.delete
-import io.ktor.client.request.get
-import io.ktor.client.request.patch
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
+import com.playmoweb.iothub.hub.model.CertificateAuthority
+import com.playmoweb.iothub.hub.model.CreateHubRequestBody
+import com.playmoweb.iothub.hub.model.Hub
+import com.playmoweb.iothub.hub.model.ListHubsResponse
+import com.playmoweb.iothub.hub.model.SetCertificateAuthorityBody
+import com.playmoweb.iothub.hub.model.UpdateHubRequestBody
 import io.ktor.client.statement.HttpResponse
 import kotlinx.datetime.Instant
 import kotlin.uuid.Uuid
 
-class IotHubHubClient(
-    private val client: HttpClient
-): HubClient {
-
-    companion object {
-        const val HUB_ROUTE_PATH = "/hubs"
-    }
-
+interface HubClient {
     /**
      * List hubs
      * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-list-hubs)
+     * @param region [IotHubRegion] Default is FR_PAR
      * @return [ListHubsResponse]
      */
-    override suspend fun listHubs(region: IotHubRegion): ListHubsResponse = client.get("${region.region}$HUB_ROUTE_PATH").body()
+    suspend fun listHubs(
+        region: IotHubRegion = IotHubClient.DEFAULT_REGION
+    ): ListHubsResponse
 
     /**
      * Create a hub
@@ -40,9 +31,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun createHub(hubToAdd: CreateHubRequestBody, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH") {
-        setBody(hubToAdd)
-    }.body()
+    suspend fun createHub(hubToAdd: CreateHubRequestBody, region: IotHubRegion = IotHubClient.DEFAULT_REGION): Hub
 
     /**
      * Get a hub
@@ -51,7 +40,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun getHub(hubId: Uuid, region: IotHubRegion): Hub = client.get("${region.region}$HUB_ROUTE_PATH/$hubId").body()
+    suspend fun getHub(hubId: Uuid, region: IotHubRegion = IotHubClient.DEFAULT_REGION): Hub
 
     /**
      * Update a hub
@@ -61,9 +50,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun updateHub(hubId: Uuid, hubToUpdate: UpdateHubRequestBody, region: IotHubRegion): Hub = client.patch("${region.region}$HUB_ROUTE_PATH/$hubId") {
-        setBody(hubToUpdate)
-    }.body()
+    suspend fun updateHub(hubId: Uuid, hubToUpdate: UpdateHubRequestBody, region: IotHubRegion = IotHubClient.DEFAULT_REGION): Hub
 
     /**
      * Delete a hub
@@ -72,7 +59,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [HttpResponse]
      */
-    override suspend fun deleteHub(hubId: Uuid, region: IotHubRegion): HttpResponse = client.delete("${region.region}$HUB_ROUTE_PATH/$hubId")
+    suspend fun deleteHub(hubId: Uuid, region: IotHubRegion = IotHubClient.DEFAULT_REGION): HttpResponse
 
     /**
      * Get the certificate authority of a hub
@@ -81,7 +68,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [CertificateAuthority]
      */
-    override suspend fun getHubCertificateAuthority(hubId: Uuid, region: IotHubRegion): CertificateAuthority = client.get("${region.region}$HUB_ROUTE_PATH/$hubId/ca").body()
+    suspend fun getHubCertificateAuthority(hubId: Uuid, region: IotHubRegion = IotHubClient.DEFAULT_REGION): CertificateAuthority
 
     /**
      * Set the certificate authority of a hub
@@ -91,9 +78,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun setHubCertificateAuthority(hubId: Uuid, certificate: SetCertificateAuthorityBody, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/ca") {
-        setBody(certificate)
-    }.body()
+    suspend fun setHubCertificateAuthority(hubId: Uuid, certificate: SetCertificateAuthorityBody, region: IotHubRegion = IotHubClient.DEFAULT_REGION): Hub
 
     /**
      * Disable a hub
@@ -102,7 +87,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun disableHub(hubId: Uuid, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/disable").body()
+    suspend fun disableHub(hubId: Uuid, region: IotHubRegion = IotHubClient.DEFAULT_REGION): Hub
 
     /**
      * Enable a hub
@@ -111,7 +96,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun enableHub(hubId: Uuid, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/enable").body()
+    suspend fun enableHub(hubId: Uuid, region: IotHubRegion = IotHubClient.DEFAULT_REGION): Hub
 
     /**
      * Get hub metrics
@@ -121,9 +106,11 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Metrics]
      */
-    override suspend fun getHubMetrics(
+    suspend fun getHubMetrics(
         hubId: Uuid,
         startDate: Instant,
-        region: IotHubRegion
-    ): Metrics = client.get("${region.region}$HUB_ROUTE_PATH/$hubId/metrics?start_date=$startDate").body()
+        region: IotHubRegion = IotHubClient.DEFAULT_REGION
+    ): Metrics
+
+
 }

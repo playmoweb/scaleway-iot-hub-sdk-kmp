@@ -1,5 +1,9 @@
 package com.playmoweb.iothub
 
+import com.playmoweb.iothub.device.DeviceClient
+import com.playmoweb.iothub.device.IotHubDeviceClient
+import com.playmoweb.iothub.hub.HubClient
+import com.playmoweb.iothub.hub.IotHubHubClient
 import io.ktor.client.HttpClient
 
 /**

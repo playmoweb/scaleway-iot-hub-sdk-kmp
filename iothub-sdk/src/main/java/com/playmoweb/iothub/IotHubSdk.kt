@@ -21,15 +21,19 @@ import kotlin.uuid.Uuid
 
 class IotHubSdk(
     iotHubConfig: IotHubConfig,
-    json: Json = Json {
-        ignoreUnknownKeys = true
-        encodeDefaults = true
-        serializersModule = SerializersModule {
-            contextual(Uuid.serializer())
-        }
-    },
+    json: Json = DEFAULT_JSON,
     debugApiResponse: Boolean = false
 ) {
+    companion object {
+        val DEFAULT_JSON = Json {
+            ignoreUnknownKeys = true
+            encodeDefaults = true
+            serializersModule = SerializersModule {
+                contextual(Uuid.serializer())
+            }
+        }
+    }
+
     private val httpClient = HttpClient(CIO) {
         if (debugApiResponse) {
             install(Logging) {
