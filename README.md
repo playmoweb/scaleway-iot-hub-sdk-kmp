@@ -21,7 +21,7 @@ val devices = sdk.client.listDevices()
 ## Features
 - [x] Hubs
 - [x] Devices
-- [ ] Routes (not implemented yet)
+- [x] Routes
 - [ ] Networks (not implemented yet)
 - [ ] Twins (not implemented yet)
 
