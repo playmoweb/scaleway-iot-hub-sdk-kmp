@@ -1,9 +1,6 @@
 package com.playmoweb.iothub.hub
 
-import com.playmoweb.iothub.IotHubClient
 import com.playmoweb.iothub.IotHubRegion
-import com.playmoweb.iothub.hub.HubClient.Companion.MAXIMUM_PAGE_SIZE
-import com.playmoweb.iothub.model.Metrics
 import com.playmoweb.iothub.hub.model.CertificateAuthority
 import com.playmoweb.iothub.hub.model.CreateHubRequestBody
 import com.playmoweb.iothub.hub.model.Hub
@@ -11,6 +8,7 @@ import com.playmoweb.iothub.hub.model.HubOrderBy
 import com.playmoweb.iothub.hub.model.ListHubsResponse
 import com.playmoweb.iothub.hub.model.SetCertificateAuthorityBody
 import com.playmoweb.iothub.hub.model.UpdateHubRequestBody
+import com.playmoweb.iothub.model.Metrics
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete

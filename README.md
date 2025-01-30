@@ -22,7 +22,7 @@ val devices = sdk.client.listDevices()
 - [x] Hubs
 - [x] Devices
 - [x] Routes
-- [ ] Networks (not implemented yet)
+- [x] Networks
 - [ ] Twins (not implemented yet)
 
 ## Useful links
