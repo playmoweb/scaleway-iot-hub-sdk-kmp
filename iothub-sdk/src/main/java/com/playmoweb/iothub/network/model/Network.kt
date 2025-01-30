@@ -1,9 +1,12 @@
 package com.playmoweb.iothub.network.model
 
+import com.playmoweb.iothub.IotHubSdk
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonPrimitive
 import kotlin.uuid.Uuid
 
 /**
@@ -34,8 +37,10 @@ data class Network(
  * rest
  */
 @Serializable
-enum class NetworkType(val value: String) {
-    @SerialName("unknown") UNKNOWN("unknown"),
-    @SerialName("sigfox") SIGFOX("sigfox"),
-    @SerialName("rest") REST("rest")
+enum class NetworkType {
+    @SerialName("unknown") UNKNOWN,
+    @SerialName("sigfox") SIGFOX,
+    @SerialName("rest") REST;
+
+    override fun toString(): String = IotHubSdk.DEFAULT_JSON.encodeToJsonElement(this).jsonPrimitive.content
 }

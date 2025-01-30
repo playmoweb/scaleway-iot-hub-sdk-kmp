@@ -1,7 +1,10 @@
 package com.playmoweb.iothub.hub.model
 
+import com.playmoweb.iothub.IotHubSdk
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * Possible values
@@ -11,13 +14,11 @@ import kotlinx.serialization.Serializable
  * plan_ha
  */
 @Serializable
-enum class IotHubProductPlan(val value: String) {
-    @SerialName("plan_unknown")
-    UNKNOWN("plan_unknown"),
-    @SerialName("plan_shared")
-    SHARED("plan_shared"),
-    @SerialName("plan_dedicated")
-    DEDICATED("plan_dedicated"),
-    @SerialName("plan_ha")
-    HA("plan_ha"),
+enum class IotHubProductPlan {
+    @SerialName("plan_unknown") UNKNOWN,
+    @SerialName("plan_shared") SHARED,
+    @SerialName("plan_dedicated") DEDICATED,
+    @SerialName("plan_ha") HA;
+
+    override fun toString(): String = IotHubSdk.DEFAULT_JSON.encodeToJsonElement(this).jsonPrimitive.content
 }

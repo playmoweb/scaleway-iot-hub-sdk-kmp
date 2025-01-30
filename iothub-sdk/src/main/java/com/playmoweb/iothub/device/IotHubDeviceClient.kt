@@ -1,6 +1,7 @@
 package com.playmoweb.iothub.device
 
 import com.playmoweb.iothub.IotHubRegion
+import com.playmoweb.iothub.IotHubSdk
 import com.playmoweb.iothub.device.DeviceClient.Companion.MAXIMUM_PAGE_SIZE
 import com.playmoweb.iothub.device.model.AddDeviceRequestBody
 import com.playmoweb.iothub.device.model.AddDeviceResponse
@@ -23,6 +24,8 @@ import io.ktor.client.request.put
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
 import kotlinx.datetime.Instant
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.encodeToJsonElement
 import kotlin.uuid.Uuid
 
 class IotHubDeviceClient(
@@ -53,13 +56,13 @@ class IotHubDeviceClient(
         allowInsecure: Boolean?,
         status: DeviceStatus?,
         region: IotHubRegion
-    ): ListDevicesResponse = client.get("${region.region}$DEVICE_ROUTE_PATH") {
+    ): ListDevicesResponse = client.get("${region}$DEVICE_ROUTE_PATH") {
         parameter("page", page)
         parameter("page_size", pageSize.coerceAtMost(MAXIMUM_PAGE_SIZE))
-        parameter("order_by", orderBy.value)
+        parameter("order_by", orderBy.toString())
         hubId?.let { parameter("hub_id", it) }
         allowInsecure?.let { parameter("allow_insecure", it) }
-        status?.let { parameter("status", it.value) }
+        status?.let { parameter("status", it.toString()) }
     }.body()
 
     /**
@@ -72,7 +75,7 @@ class IotHubDeviceClient(
     override suspend fun addDevice(
         deviceToAdd: AddDeviceRequestBody,
         region: IotHubRegion,
-    ): AddDeviceResponse = client.post("${region.region}$DEVICE_ROUTE_PATH") {
+    ): AddDeviceResponse = client.post("${region}$DEVICE_ROUTE_PATH") {
         setBody(deviceToAdd)
     }.body()
 
@@ -86,7 +89,7 @@ class IotHubDeviceClient(
     override suspend fun getDevice(
         deviceId: Uuid,
         region: IotHubRegion
-    ): Device = client.get("${region.region}$DEVICE_ROUTE_PATH/$deviceId").body()
+    ): Device = client.get("${region}$DEVICE_ROUTE_PATH/$deviceId").body()
 
     /**
      * Update a device
@@ -100,7 +103,7 @@ class IotHubDeviceClient(
         deviceId: Uuid,
         deviceToUpdate: UpdateDeviceRequestBody,
         region: IotHubRegion
-    ): Device = client.patch("${region.region}$DEVICE_ROUTE_PATH/$deviceId") {
+    ): Device = client.patch("${region}$DEVICE_ROUTE_PATH/$deviceId") {
         setBody(deviceToUpdate)
     }.body()
 
@@ -113,7 +116,7 @@ class IotHubDeviceClient(
     override suspend fun removeDevice(
         deviceId: Uuid,
         region: IotHubRegion
-    ): HttpResponse = client.delete("${region.region}$DEVICE_ROUTE_PATH/$deviceId")
+    ): HttpResponse = client.delete("${region}$DEVICE_ROUTE_PATH/$deviceId")
 
     /**
      * Get device certificate
@@ -125,7 +128,7 @@ class IotHubDeviceClient(
     override suspend fun getDeviceCertificate(
         deviceId: Uuid,
         region: IotHubRegion
-    ): DeviceCertificateResponse = client.get("${region.region}$DEVICE_ROUTE_PATH/$deviceId/certificate").body()
+    ): DeviceCertificateResponse = client.get("${region}$DEVICE_ROUTE_PATH/$deviceId/certificate").body()
 
     /**
      * Set a custom certificate
@@ -139,7 +142,7 @@ class IotHubDeviceClient(
         deviceId: Uuid,
         certificatePem: String,
         region: IotHubRegion
-    ): DeviceCertificateResponse = client.put("${region.region}$DEVICE_ROUTE_PATH/$deviceId/certificate") {
+    ): DeviceCertificateResponse = client.put("${region}$DEVICE_ROUTE_PATH/$deviceId/certificate") {
         setBody(CustomCertificateRequestBody(certificatePem))
     }.body()
 
@@ -153,7 +156,7 @@ class IotHubDeviceClient(
     override suspend fun disableDevice(
         deviceId: Uuid,
         region: IotHubRegion
-    ): Device = client.post("${region.region}$DEVICE_ROUTE_PATH/$deviceId/disable").body()
+    ): Device = client.post("${region}$DEVICE_ROUTE_PATH/$deviceId/disable").body()
 
     /**
      * Enable a device
@@ -165,7 +168,7 @@ class IotHubDeviceClient(
     override suspend fun enableDevice(
         deviceId: Uuid,
         region: IotHubRegion
-    ): Device = client.post("${region.region}$DEVICE_ROUTE_PATH/$deviceId/enable").body()
+    ): Device = client.post("${region}$DEVICE_ROUTE_PATH/$deviceId/enable").body()
 
     /**
      * Get device metrics
@@ -182,7 +185,7 @@ class IotHubDeviceClient(
     ): Metrics {
         // Convert startDateStr to RFC 3339 format
         val startDateStr = startDate.toString()
-        return client.get("${region.region}$DEVICE_ROUTE_PATH/$deviceId/metrics", {
+        return client.get("${region}$DEVICE_ROUTE_PATH/$deviceId/metrics", {
             parameter("start_date", startDateStr)
         }).body()
     }
@@ -197,5 +200,5 @@ class IotHubDeviceClient(
     override suspend fun renewDeviceCertificate(
         deviceId: Uuid,
         region: IotHubRegion
-    ): AddDeviceResponse = client.post("${region.region}$DEVICE_ROUTE_PATH/$deviceId/renew-certificate").body()
+    ): AddDeviceResponse = client.post("${region}$DEVICE_ROUTE_PATH/$deviceId/renew-certificate").body()
 }

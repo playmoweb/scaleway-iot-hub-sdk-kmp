@@ -47,10 +47,10 @@ class IotHubNetworkClient(
         name: String?,
         region: IotHubRegion
     ): ListNetworksResponse = client
-        .get("${region.region}$NETWORK_ROUTE_PATH") {
+        .get("${region}$NETWORK_ROUTE_PATH") {
             parameter("page", page)
             parameter("page_size", pageSize)
-            parameter("order_by", orderBy.value)
+            parameter("order_by", orderBy.toString())
             hubId?.let { parameter("hub_id", it) }
             topicPrefix?.let { parameter("topic_prefix", it) }
             name?.let { parameter("name", it) }
@@ -65,7 +65,7 @@ class IotHubNetworkClient(
      * @return [CreateNetworkResponse]
      */
     override suspend fun createNetwork(networkToAdd: CreateNetworkRequestBody, region: IotHubRegion): CreateNetworkResponse = client
-        .post("${region.region}$NETWORK_ROUTE_PATH") {
+        .post("${region}$NETWORK_ROUTE_PATH") {
             setBody(networkToAdd)
         }.body()
 
@@ -77,7 +77,7 @@ class IotHubNetworkClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Network]
      */
-    override suspend fun getNetwork(networkId: Uuid, region: IotHubRegion): Network = client.get("${region.region}$NETWORK_ROUTE_PATH/$networkId").body()
+    override suspend fun getNetwork(networkId: Uuid, region: IotHubRegion): Network = client.get("${region}$NETWORK_ROUTE_PATH/$networkId").body()
 
     /**
      * Delete a Network
@@ -87,5 +87,5 @@ class IotHubNetworkClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [HttpResponse]
      */
-    override suspend fun deleteNetwork(networkId: Uuid, region: IotHubRegion): HttpResponse = client.delete("${region.region}$NETWORK_ROUTE_PATH/$networkId")
+    override suspend fun deleteNetwork(networkId: Uuid, region: IotHubRegion): HttpResponse = client.delete("${region}$NETWORK_ROUTE_PATH/$networkId")
 }

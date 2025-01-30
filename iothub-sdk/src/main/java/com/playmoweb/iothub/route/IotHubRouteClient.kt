@@ -43,10 +43,10 @@ class IotHubRouteClient(
         hubId: Uuid?,
         name: String?,
         region: IotHubRegion
-    ): ListRoutesResponse = client.get("${region.region}${ROUTE_ROUTE_PATH}") {
+    ): ListRoutesResponse = client.get("${region}${ROUTE_ROUTE_PATH}") {
         parameter("page", page)
         parameter("page_size", pageSize)
-        parameter("order_by", orderBy.value)
+        parameter("order_by", orderBy.toString())
         hubId?.let { parameter("hub_id", it) }
         name?.let { parameter("name", it) }
     }.body()
@@ -62,7 +62,7 @@ class IotHubRouteClient(
         require (!(routeToAdd.s3Config == null && routeToAdd.restConfig == null && routeToAdd.dbConfig == null)) {
             "At least one of the following fields must be set: s3Config, restConfig, dbConfig"
         }
-        return client.post("${region.region}${ROUTE_ROUTE_PATH}") {
+        return client.post("${region}${ROUTE_ROUTE_PATH}") {
             setBody(routeToAdd)
         }.body()
     }
@@ -74,7 +74,7 @@ class IotHubRouteClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Route]
      */
-    override suspend fun getRoute(routeId: Uuid, region: IotHubRegion): Route = client.get("${region.region}${ROUTE_ROUTE_PATH}/$routeId").body()
+    override suspend fun getRoute(routeId: Uuid, region: IotHubRegion): Route = client.get("${region}${ROUTE_ROUTE_PATH}/$routeId").body()
 
     /**
      * Update a route
@@ -84,7 +84,7 @@ class IotHubRouteClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Route]
      */
-    override suspend fun updateRoute(routeId: Uuid, routeToUpdate: UpdateRouteRequestBody, region: IotHubRegion): Route = client.patch("${region.region}${ROUTE_ROUTE_PATH}/$routeId") {
+    override suspend fun updateRoute(routeId: Uuid, routeToUpdate: UpdateRouteRequestBody, region: IotHubRegion): Route = client.patch("${region}${ROUTE_ROUTE_PATH}/$routeId") {
         setBody(routeToUpdate)
     }.body()
 
@@ -95,5 +95,5 @@ class IotHubRouteClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [HttpResponse]
      */
-    override suspend fun deleteRoute(routeId: Uuid, region: IotHubRegion): HttpResponse = client.delete("${region.region}${ROUTE_ROUTE_PATH}/$routeId")
+    override suspend fun deleteRoute(routeId: Uuid, region: IotHubRegion): HttpResponse = client.delete("${region}${ROUTE_ROUTE_PATH}/$routeId")
 }

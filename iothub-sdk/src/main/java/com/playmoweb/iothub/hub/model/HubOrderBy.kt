@@ -1,7 +1,10 @@
 package com.playmoweb.iothub.hub.model
 
+import com.playmoweb.iothub.IotHubSdk
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * name_asc
@@ -16,15 +19,17 @@ import kotlinx.serialization.Serializable
  * updated_at_desc
  */
 @Serializable
-enum class HubOrderBy(val value: String) {
-    @SerialName("name_asc") NAME_ASC("name_asc"),
-    @SerialName("name_desc") NAME_DESC("name_desc"),
-    @SerialName("status_asc") STATUS_ASC("status_asc"),
-    @SerialName("status_desc") STATUS_DESC("status_desc"),
-    @SerialName("product_plan_asc") PRODUCT_PLAN_ASC("product_plan_asc"),
-    @SerialName("product_plan_desc") PRODUCT_PLAN_DESC("product_plan_desc"),
-    @SerialName("created_at_asc") CREATED_AT_ASC("created_at_asc"),
-    @SerialName("created_at_desc") CREATED_AT_DESC("created_at_desc"),
-    @SerialName("updated_at_asc") UPDATED_AT_ASC("updated_at_asc"),
-    @SerialName("updated_at_desc") UPDATED_AT_DESC("updated_at_desc")
+enum class HubOrderBy {
+    @SerialName("name_asc") NAME_ASC,
+    @SerialName("name_desc") NAME_DESC,
+    @SerialName("status_asc") STATUS_ASC,
+    @SerialName("status_desc") STATUS_DESC,
+    @SerialName("product_plan_asc") PRODUCT_PLAN_ASC,
+    @SerialName("product_plan_desc") PRODUCT_PLAN_DESC,
+    @SerialName("created_at_asc") CREATED_AT_ASC,
+    @SerialName("created_at_desc") CREATED_AT_DESC,
+    @SerialName("updated_at_asc") UPDATED_AT_ASC,
+    @SerialName("updated_at_desc") UPDATED_AT_DESC;
+
+    override fun toString(): String = IotHubSdk.DEFAULT_JSON.encodeToJsonElement(this).jsonPrimitive.content
 }

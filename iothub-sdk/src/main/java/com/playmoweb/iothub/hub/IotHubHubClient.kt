@@ -50,10 +50,10 @@ class IotHubHubClient(
         name: String?,
         region: IotHubRegion
     ): ListHubsResponse = client
-        .get("${region.region}$HUB_ROUTE_PATH") {
+        .get("${region}$HUB_ROUTE_PATH") {
             parameter("page", page)
             parameter("page_size", pageSize)
-            parameter("order_by", orderBy.value)
+            parameter("order_by", orderBy.toString())
             projectId?.let { parameter("project_id", it) }
             organizationId?.let { parameter("organization_id", it) }
             name?.let { parameter("name", it) }
@@ -67,7 +67,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun createHub(hubToAdd: CreateHubRequestBody, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH") {
+    override suspend fun createHub(hubToAdd: CreateHubRequestBody, region: IotHubRegion): Hub = client.post("${region}$HUB_ROUTE_PATH") {
         setBody(hubToAdd)
     }.body()
 
@@ -78,7 +78,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun getHub(hubId: Uuid, region: IotHubRegion): Hub = client.get("${region.region}$HUB_ROUTE_PATH/$hubId").body()
+    override suspend fun getHub(hubId: Uuid, region: IotHubRegion): Hub = client.get("${region}$HUB_ROUTE_PATH/$hubId").body()
 
     /**
      * Update a hub
@@ -88,7 +88,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun updateHub(hubId: Uuid, hubToUpdate: UpdateHubRequestBody, region: IotHubRegion): Hub = client.patch("${region.region}$HUB_ROUTE_PATH/$hubId") {
+    override suspend fun updateHub(hubId: Uuid, hubToUpdate: UpdateHubRequestBody, region: IotHubRegion): Hub = client.patch("${region}$HUB_ROUTE_PATH/$hubId") {
         setBody(hubToUpdate)
     }.body()
 
@@ -99,7 +99,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [HttpResponse]
      */
-    override suspend fun deleteHub(hubId: Uuid, region: IotHubRegion): HttpResponse = client.delete("${region.region}$HUB_ROUTE_PATH/$hubId")
+    override suspend fun deleteHub(hubId: Uuid, region: IotHubRegion): HttpResponse = client.delete("${region}$HUB_ROUTE_PATH/$hubId")
 
     /**
      * Get the certificate authority of a hub
@@ -108,7 +108,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [CertificateAuthority]
      */
-    override suspend fun getHubCertificateAuthority(hubId: Uuid, region: IotHubRegion): CertificateAuthority = client.get("${region.region}$HUB_ROUTE_PATH/$hubId/ca").body()
+    override suspend fun getHubCertificateAuthority(hubId: Uuid, region: IotHubRegion): CertificateAuthority = client.get("${region}$HUB_ROUTE_PATH/$hubId/ca").body()
 
     /**
      * Set the certificate authority of a hub
@@ -118,7 +118,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun setHubCertificateAuthority(hubId: Uuid, certificate: SetCertificateAuthorityBody, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/ca") {
+    override suspend fun setHubCertificateAuthority(hubId: Uuid, certificate: SetCertificateAuthorityBody, region: IotHubRegion): Hub = client.post("${region}$HUB_ROUTE_PATH/$hubId/ca") {
         setBody(certificate)
     }.body()
 
@@ -129,7 +129,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun disableHub(hubId: Uuid, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/disable").body()
+    override suspend fun disableHub(hubId: Uuid, region: IotHubRegion): Hub = client.post("${region}$HUB_ROUTE_PATH/$hubId/disable").body()
 
     /**
      * Enable a hub
@@ -138,7 +138,7 @@ class IotHubHubClient(
      * @param region [IotHubRegion] Default is FR_PAR
      * @return [Hub]
      */
-    override suspend fun enableHub(hubId: Uuid, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/enable").body()
+    override suspend fun enableHub(hubId: Uuid, region: IotHubRegion): Hub = client.post("${region}$HUB_ROUTE_PATH/$hubId/enable").body()
 
     /**
      * Get hub metrics
@@ -152,5 +152,5 @@ class IotHubHubClient(
         hubId: Uuid,
         startDate: Instant,
         region: IotHubRegion
-    ): Metrics = client.get("${region.region}$HUB_ROUTE_PATH/$hubId/metrics?start_date=$startDate").body()
+    ): Metrics = client.get("${region}$HUB_ROUTE_PATH/$hubId/metrics?start_date=$startDate").body()
 }

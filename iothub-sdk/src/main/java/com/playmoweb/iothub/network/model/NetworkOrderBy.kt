@@ -1,7 +1,10 @@
 package com.playmoweb.iothub.network.model
 
+import com.playmoweb.iothub.IotHubSdk
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * name_asc
@@ -12,11 +15,13 @@ import kotlinx.serialization.Serializable
  * created_at_desc
  */
 @Serializable
-enum class NetworkOrderBy(val value: String) {
-    @SerialName("name_asc") NAME_ASC("name_asc"),
-    @SerialName("name_desc") NAME_DESC("name_desc"),
-    @SerialName("type_asc") TYPE_ASC("type_asc"),
-    @SerialName("type_desc") TYPE_DESC("type_desc"),
-    @SerialName("created_at_asc") CREATED_AT_ASC("created_at_asc"),
-    @SerialName("created_at_desc") CREATED_AT_DESC("created_at_desc")
+enum class NetworkOrderBy {
+    @SerialName("name_asc") NAME_ASC,
+    @SerialName("name_desc") NAME_DESC,
+    @SerialName("type_asc") TYPE_ASC,
+    @SerialName("type_desc") TYPE_DESC,
+    @SerialName("created_at_asc") CREATED_AT_ASC,
+    @SerialName("created_at_desc") CREATED_AT_DESC;
+
+    override fun toString(): String = IotHubSdk.DEFAULT_JSON.encodeToJsonElement(this).jsonPrimitive.content
 }

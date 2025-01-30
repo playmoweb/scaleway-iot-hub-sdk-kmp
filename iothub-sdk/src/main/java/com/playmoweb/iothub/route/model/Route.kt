@@ -1,9 +1,12 @@
 package com.playmoweb.iothub.route.model
 
+import com.playmoweb.iothub.IotHubSdk
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonPrimitive
 import kotlin.uuid.Uuid
 
 @Serializable
@@ -52,10 +55,12 @@ data class RestConfig(
  * per_message
  */
 @Serializable
-enum class S3Strategy(val value: String) {
-    @SerialName("unknown") UNKNOWN("unknown"),
-    @SerialName("per_topic") PER_TOPIC("per_topic"),
-    @SerialName("per_message") PER_MESSAGE("per_message")
+enum class S3Strategy {
+    @SerialName("unknown") UNKNOWN,
+    @SerialName("per_topic") PER_TOPIC,
+    @SerialName("per_message") PER_MESSAGE;
+
+    override fun toString(): String = IotHubSdk.DEFAULT_JSON.encodeToJsonElement(this).jsonPrimitive.content
 }
 
 /**
@@ -65,11 +70,13 @@ enum class S3Strategy(val value: String) {
  * rest
  */
 @Serializable
-enum class RouteType(val value: String) {
-    @SerialName("unknown") UNKNOWN("unknown"),
-    @SerialName("s3") S3("s3"),
-    @SerialName("database") DATABASE("database"),
-    @SerialName("rest") REST("rest")
+enum class RouteType {
+    @SerialName("unknown") UNKNOWN,
+    @SerialName("s3") S3,
+    @SerialName("database") DATABASE,
+    @SerialName("rest") REST;
+
+    override fun toString(): String = IotHubSdk.DEFAULT_JSON.encodeToJsonElement(this).jsonPrimitive.content
 }
 
 /**
@@ -78,10 +85,12 @@ enum class RouteType(val value: String) {
  * mysql
  */
 @Serializable
-enum class DbEngine(val value: String) {
-    @SerialName("unknown") UNKNOWN("unknown"),
-    @SerialName("postgresql") POSTGRESQL("postgresql"),
-    @SerialName("mysql") MYSQL("mysql")
+enum class DbEngine {
+    @SerialName("unknown") UNKNOWN,
+    @SerialName("postgresql") POSTGRESQL,
+    @SerialName("mysql") MYSQL;
+
+    override fun toString(): String = IotHubSdk.DEFAULT_JSON.encodeToJsonElement(this).jsonPrimitive.content
 }
 
 /**
@@ -93,11 +102,13 @@ enum class DbEngine(val value: String) {
  * delete
  */
 @Serializable
-enum class RestVerb(val value: String) {
-    @SerialName("unknown") UNKNOWN("unknown"),
-    @SerialName("get") GET("get"),
-    @SerialName("post") POST("post"),
-    @SerialName("put") PUT("put"),
-    @SerialName("patch") PATCH("patch"),
-    @SerialName("delete") DELETE("delete")
+enum class RestVerb {
+    @SerialName("unknown") UNKNOWN,
+    @SerialName("get") GET,
+    @SerialName("post") POST,
+    @SerialName("put") PUT,
+    @SerialName("patch") PATCH,
+    @SerialName("delete") DELETE;
+
+    override fun toString(): String = IotHubSdk.DEFAULT_JSON.encodeToJsonElement(this).jsonPrimitive.content
 }

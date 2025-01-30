@@ -35,7 +35,7 @@ class IotHubTwinClient(
      */
     @ExperimentalTwin
     override suspend fun listTwinDocuments(twinId: Uuid, region: IotHubRegion): TwinDocumentsResponse = client
-        .get("${region.region}$TWIN_ROUTE_PATH/$twinId")
+        .get("${region}$TWIN_ROUTE_PATH/$twinId")
         .body()
 
     /**
@@ -47,7 +47,7 @@ class IotHubTwinClient(
      */
     @ExperimentalTwin
     override suspend fun deleteTwinDocuments(twinId: Uuid, region: IotHubRegion): HttpResponse = client
-        .delete("${region.region}$TWIN_ROUTE_PATH/$twinId")
+        .delete("${region}$TWIN_ROUTE_PATH/$twinId")
 
     /**
      * Get a Cloud Twin Document
@@ -59,7 +59,7 @@ class IotHubTwinClient(
      */
     @ExperimentalTwin
     override suspend fun getTwinDocument(twinId: Uuid, documentName: String, region: IotHubRegion): TwinDocument = client
-        .get("${region.region}$TWIN_ROUTE_PATH/$twinId/documents/$documentName")
+        .get("${region}$TWIN_ROUTE_PATH/$twinId/documents/$documentName")
         .body()
 
     /**
@@ -73,7 +73,7 @@ class IotHubTwinClient(
      */
     @ExperimentalTwin
     override suspend fun updateTwinDocument(twinId: Uuid, documentName: String, documentToUpdate: UpdateTwinDocumentRequestBody, region: IotHubRegion): TwinDocument = client
-        .put("${region.region}$TWIN_ROUTE_PATH/$twinId/documents/$documentName") {
+        .put("${region}$TWIN_ROUTE_PATH/$twinId/documents/$documentName") {
             setBody(documentToUpdate)
         }
         .body()
@@ -98,7 +98,7 @@ class IotHubTwinClient(
      */
     @ExperimentalTwin
     override suspend fun patchTwinDocument(twinId: Uuid, documentName: String, documentToPatch: UpdateTwinDocumentRequestBody, region: IotHubRegion): TwinDocument = client
-        .patch("${region.region}$TWIN_ROUTE_PATH/$twinId/documents/$documentName/patch") {
+        .patch("${region}$TWIN_ROUTE_PATH/$twinId/documents/$documentName/patch") {
             setBody(documentToPatch)
         }
         .body()
@@ -113,5 +113,5 @@ class IotHubTwinClient(
      */
     @ExperimentalTwin
     override suspend fun deleteTwinDocument(twinId: Uuid, documentName: String, region: IotHubRegion): HttpResponse = client
-        .delete("${region.region}$TWIN_ROUTE_PATH/$twinId/documents/$documentName")
+        .delete("${region}$TWIN_ROUTE_PATH/$twinId/documents/$documentName")
 }
