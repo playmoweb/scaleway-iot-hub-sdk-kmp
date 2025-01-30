@@ -1,5 +1,6 @@
 package com.playmoweb.iothub
 
+import com.playmoweb.iothub.model.Metrics
 import com.playmoweb.iothub.model.hub.CertificateAuthority
 import com.playmoweb.iothub.model.hub.CreateHubRequestBody
 import com.playmoweb.iothub.model.hub.Hub
@@ -7,6 +8,7 @@ import com.playmoweb.iothub.model.hub.ListHubsResponse
 import com.playmoweb.iothub.model.hub.SetCertificateAuthorityBody
 import com.playmoweb.iothub.model.hub.UpdateHubRequestBody
 import io.ktor.client.statement.HttpResponse
+import kotlinx.datetime.Instant
 import kotlin.uuid.Uuid
 
 interface HubClient {
@@ -75,4 +77,38 @@ interface HubClient {
      * @return [Hub]
      */
     suspend fun setHubCertificateAuthority(hubId: Uuid, certificate: SetCertificateAuthorityBody, region: IotHubRegion = IotHubClient.DEFAULT_REGION): Hub
+
+    /**
+     * Disable a hub
+     * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-disable-a-hub)
+     * @param hubId [Uuid]
+     * @param region [IotHubRegion] Default is FR_PAR
+     * @return [Hub]
+     */
+    suspend fun disableHub(hubId: Uuid, region: IotHubRegion = IotHubClient.DEFAULT_REGION): Hub
+
+    /**
+     * Enable a hub
+     * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-enable-a-hub)
+     * @param hubId [Uuid]
+     * @param region [IotHubRegion] Default is FR_PAR
+     * @return [Hub]
+     */
+    suspend fun enableHub(hubId: Uuid, region: IotHubRegion = IotHubClient.DEFAULT_REGION): Hub
+
+    /**
+     * Get hub metrics
+     * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-get-a-hubs-metrics
+     * @param hubId [Uuid]
+     * @param startDate: [Instant]
+     * @param region [IotHubRegion] Default is FR_PAR
+     * @return [Metrics]
+     */
+    suspend fun getHubMetrics(
+        hubId: Uuid,
+        startDate: Instant,
+        region: IotHubRegion = IotHubClient.DEFAULT_REGION
+    ): Metrics
+
+
 }

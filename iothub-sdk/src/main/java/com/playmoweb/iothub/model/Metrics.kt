@@ -1,10 +1,10 @@
-package com.playmoweb.iothub.model.device
+package com.playmoweb.iothub.model
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DeviceMetrics(
-    val metrics: List<DeviceMetric>
+data class Metrics(
+    val metrics: List<Metric>
 )
 
 /**
@@ -12,7 +12,7 @@ data class DeviceMetrics(
  * TODO add points
  */
 @Serializable
-data class DeviceMetric(
+data class Metric(
     val name: String,
     val metadata: Map<String, String>
 )

@@ -4,7 +4,7 @@ import com.playmoweb.iothub.model.device.AddDeviceRequestBody
 import com.playmoweb.iothub.model.device.AddDeviceResponse
 import com.playmoweb.iothub.model.device.Device
 import com.playmoweb.iothub.model.device.DeviceCertificateResponse
-import com.playmoweb.iothub.model.device.DeviceMetrics
+import com.playmoweb.iothub.model.Metrics
 import com.playmoweb.iothub.model.device.ListDevicesResponse
 import com.playmoweb.iothub.model.device.UpdateDeviceRequestBody
 import io.ktor.client.statement.HttpResponse
@@ -127,13 +127,13 @@ interface DeviceClient {
      * @param deviceId [Uuid]
      * @param startDate: [Instant]
      * @param region [IotHubRegion] Default is FR_PAR
-     * @return [DeviceMetrics]
+     * @return [Metrics]
      */
     suspend fun getDeviceMetrics(
         deviceId: Uuid,
         startDate: Instant,
         region: IotHubRegion = IotHubClient.DEFAULT_REGION
-    ): DeviceMetrics
+    ): Metrics
 
     /**
      * Renew a device certificate

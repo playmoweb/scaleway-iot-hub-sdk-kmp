@@ -5,7 +5,7 @@ import com.playmoweb.iothub.model.device.AddDeviceResponse
 import com.playmoweb.iothub.model.device.CustomCertificateRequestBody
 import com.playmoweb.iothub.model.device.Device
 import com.playmoweb.iothub.model.device.DeviceCertificateResponse
-import com.playmoweb.iothub.model.device.DeviceMetrics
+import com.playmoweb.iothub.model.Metrics
 import com.playmoweb.iothub.model.device.ListDevicesResponse
 import com.playmoweb.iothub.model.device.UpdateDeviceRequestBody
 import io.ktor.client.HttpClient
@@ -149,13 +149,13 @@ class IotHubDeviceClient(
      * @param deviceId [Uuid]
      * @param startDate: [Instant]
      * @param region [IotHubRegion] Default is FR_PAR
-     * @return [DeviceMetrics]
+     * @return [Metrics]
      */
     override suspend fun getDeviceMetrics(
         deviceId: Uuid,
         startDate: Instant,
         region: IotHubRegion
-    ): DeviceMetrics {
+    ): Metrics {
         // Convert startDateStr to RFC 3339 format
         val startDateStr = startDate.toString()
         return client.get("${region.region}$DEVICE_ROUTE_PATH/$deviceId/metrics", {

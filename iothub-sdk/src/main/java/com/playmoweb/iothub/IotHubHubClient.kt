@@ -1,5 +1,6 @@
 package com.playmoweb.iothub
 
+import com.playmoweb.iothub.model.Metrics
 import com.playmoweb.iothub.model.hub.CertificateAuthority
 import com.playmoweb.iothub.model.hub.CreateHubRequestBody
 import com.playmoweb.iothub.model.hub.Hub
@@ -14,6 +15,7 @@ import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
+import kotlinx.datetime.Instant
 import kotlin.uuid.Uuid
 
 class IotHubHubClient(
@@ -92,4 +94,36 @@ class IotHubHubClient(
     override suspend fun setHubCertificateAuthority(hubId: Uuid, certificate: SetCertificateAuthorityBody, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/ca") {
         setBody(certificate)
     }.body()
+
+    /**
+     * Disable a hub
+     * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-disable-a-hub)
+     * @param hubId [Uuid]
+     * @param region [IotHubRegion] Default is FR_PAR
+     * @return [Hub]
+     */
+    override suspend fun disableHub(hubId: Uuid, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/disable").body()
+
+    /**
+     * Enable a hub
+     * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-enable-a-hub)
+     * @param hubId [Uuid]
+     * @param region [IotHubRegion] Default is FR_PAR
+     * @return [Hub]
+     */
+    override suspend fun enableHub(hubId: Uuid, region: IotHubRegion): Hub = client.post("${region.region}$HUB_ROUTE_PATH/$hubId/enable").body()
+
+    /**
+     * Get hub metrics
+     * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-hubs-get-a-hubs-metrics
+     * @param hubId [Uuid]
+     * @param startDate: [Instant]
+     * @param region [IotHubRegion] Default is FR_PAR
+     * @return [Metrics]
+     */
+    override suspend fun getHubMetrics(
+        hubId: Uuid,
+        startDate: Instant,
+        region: IotHubRegion
+    ): Metrics = client.get("${region.region}$HUB_ROUTE_PATH/$hubId/metrics?start_date=$startDate").body()
 }
