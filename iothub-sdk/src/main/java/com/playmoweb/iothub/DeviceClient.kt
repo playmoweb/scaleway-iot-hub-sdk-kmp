@@ -15,6 +15,7 @@ interface DeviceClient {
     /**
      * List devices
      * @see [Documentation](https://www.scaleway.com/en/developers/api/iot/#path-iot-devices-list-devices)
+     * @param region [IotHubRegion] Default is FR_PAR
      * @return [ListDevicesResponse]
      */
     suspend fun listDevices(

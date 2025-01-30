@@ -16,9 +16,9 @@ val IotHubCallRequestExceptionHandler: CallRequestExceptionHandler = { exception
 }
 
 open class IotHubException(
-    val statusCode: HttpStatusCode,
-    val body: ErrorBody
-): RuntimeException("IotHub error $statusCode: ${body.message} for ${body.resource} ${body.resourceId}")
+    statusCode: HttpStatusCode,
+    body: ErrorBody
+): RuntimeException("IotHub error $statusCode: ${body.message}${body.resource?.let { " for $it" }}${body.resourceId?.let { " with id $it" }}")
 
 @Serializable
 data class ErrorBody(

@@ -1,5 +1,6 @@
 package com.playmoweb.iothub.model.hub
 
+import com.playmoweb.iothub.IotHubProductPlan
 import com.playmoweb.iothub.IotHubRegion
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Contextual
@@ -36,7 +37,7 @@ data class Hub(
     @Contextual val id: Uuid,
     val name: String,
     val status: String,
-    @SerialName("product_plan") val productPlan: String,
+    @SerialName("product_plan") val productPlan: IotHubProductPlan,
     val enabled: Boolean,
     @SerialName("device_count") val deviceCount: Int,
     @SerialName("connected_device_count") val connectedDeviceCount: Int,
