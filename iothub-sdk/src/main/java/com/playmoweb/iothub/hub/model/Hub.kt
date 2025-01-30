@@ -1,6 +1,5 @@
 package com.playmoweb.iothub.hub.model
 
-import com.playmoweb.iothub.IotHubProductPlan
 import com.playmoweb.iothub.IotHubRegion
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Contextual

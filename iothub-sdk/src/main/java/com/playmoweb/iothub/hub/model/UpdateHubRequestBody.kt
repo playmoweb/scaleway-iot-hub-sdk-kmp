@@ -1,6 +1,5 @@
 package com.playmoweb.iothub.hub.model
 
-import com.playmoweb.iothub.IotHubProductPlan
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
