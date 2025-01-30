@@ -8,6 +8,8 @@ import com.playmoweb.iothub.network.IotHubNetworkClient
 import com.playmoweb.iothub.network.NetworkClient
 import com.playmoweb.iothub.route.IotHubRouteClient
 import com.playmoweb.iothub.route.RouteClient
+import com.playmoweb.iothub.twin.IotHubTwinClient
+import com.playmoweb.iothub.twin.TwinClient
 import io.ktor.client.HttpClient
 
 /**
@@ -19,11 +21,13 @@ class IotHubClient(
     private val deviceClient: DeviceClient = IotHubDeviceClient(client),
     private val hubClient: HubClient = IotHubHubClient(client),
     private val routeClient: RouteClient = IotHubRouteClient(client),
-    private val networkClient: NetworkClient = IotHubNetworkClient(client)
+    private val networkClient: NetworkClient = IotHubNetworkClient(client),
+    private val twinClient: TwinClient = IotHubTwinClient(client)
 ) : DeviceClient by deviceClient,
     HubClient by hubClient,
     RouteClient by routeClient,
-    NetworkClient by networkClient {
+    NetworkClient by networkClient,
+    TwinClient by twinClient {
 
     companion object {
         val DEFAULT_REGION = IotHubRegion.FR_PAR

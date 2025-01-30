@@ -23,7 +23,7 @@ val devices = sdk.client.listDevices()
 - [x] Devices
 - [x] Routes
 - [x] Networks
-- [ ] Twins (not implemented yet)
+- [x] Twins (experimental) ([Cloud Twins API is in BETA](https://www.scaleway.com/en/developers/api/iot/#path-iot-cloud-twins-beta-list-the-documents-of-a-cloud-twin))
 
 ## Useful links
 - [Scaleway IoT Hub API documentation](https://www.scaleway.com/en/developers/api/iot/)
