@@ -4,6 +4,7 @@ gradle-android = "8.8.0"
 kotlin = "2.1.0"
 kotlinxDatetime = "0.6.1"
 ktor = "3.0.3"
+maven-publish = "0.30.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -20,3 +21,4 @@ ktor-client-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-
 android-library = { id = "com.android.library", version.ref = "gradle-android" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }

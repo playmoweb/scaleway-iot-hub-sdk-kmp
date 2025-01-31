@@ -17,11 +17,7 @@ It is written in Kotlin Multiplatform and uses the Ktor client library to intera
 
 ## Setup
 
-### Add the repository
-
-```kotlin
-maven(url = "https://maven.pkg.github.com/playmoweb/scaleway-iot-hub-sdk-kmp")
-```
+Dependencies are hosted on Maven Central.
 
 ### Add dependency
 

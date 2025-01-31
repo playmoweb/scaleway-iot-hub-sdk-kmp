@@ -1,14 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import com.vanniktech.maven.publish.KotlinMultiplatform
+import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
-    id("maven-publish")
+    alias(libs.plugins.maven.publish)
 }
-
-group = "com.playmoweb.iothub"
-version = "0.1.0"
 
 kotlin {
     androidTarget {
@@ -81,15 +80,36 @@ android {
     }
 }
 
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/playmoweb/scaleway-iot-hub-sdk-kmp")
-            credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+mavenPublishing {
+    configure(
+        KotlinMultiplatform()
+    )
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+    coordinates("com.playmoweb.iothub", "iothub-sdk", "0.1.0")
+    pom {
+        name.set("scaleway-iot-hub-sdk-kmp")
+        description.set("A Kotlin Multiplatform SDK for interacting with Scaleway IoT Hub API.")
+        inceptionYear.set("2025")
+        url.set("https://github.com/username/mylibrary/")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
             }
+        }
+        developers {
+            developer {
+                id.set("playmoweb")
+                name.set("Playmoweb")
+                url.set("https://github.com/playmoweb/")
+            }
+        }
+        scm {
+            url.set("https://github.com/playmoweb/scaleway-iot-hub-sdk-kmp/")
+            connection.set("scm:git:git://github.com/playmoweb/scaleway-iot-hub-sdk-kmp.git")
+            developerConnection.set("scm:git:ssh://git@github.com/playmoweb/scaleway-iot-hub-sdk-kmp.git")
         }
     }
 }
