@@ -1,7 +1,7 @@
 package com.playmoweb.iothub
 
 import com.playmoweb.iothub.route.model.ListRoutesResponse
-import org.junit.Test
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class RouteSerializationTest {

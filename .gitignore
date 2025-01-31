@@ -1,5 +1,6 @@
 .gradle
+.kotlin
 build
 .idea
 local.properties
-iothub-sdk/src/test/java/com/playmoweb/iothub/*.kt
+iothub-sdk/src/commonTest/**/*.kt

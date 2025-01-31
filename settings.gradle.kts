@@ -2,16 +2,18 @@ rootProject.name = "iothubsdk"
 
 pluginManagement {
     repositories {
-        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
+        google()
         mavenCentral()
         gradlePluginPortal()
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
     }
 }
 
 dependencyResolutionManagement {
     repositories {
-        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
+        google()
         mavenCentral()
+        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
     }
 }
 
