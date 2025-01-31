@@ -1,7 +1,9 @@
 # Scaleway IoT Hub SDK for Kotlin Multiplatform
 
+![Version](https://img.shields.io/badge/version-0.1.0-green)
 ![JVM](https://img.shields.io/badge/platform-jvm-orange)
 ![Android](https://img.shields.io/badge/platform-android-orange)
+![iOS](https://img.shields.io/badge/platform-ios-orange)
 
 This is an unofficial SDK for the Scaleway IoT Hub API. 
 
@@ -11,23 +13,20 @@ It is written in Kotlin Multiplatform and uses the Ktor client library to intera
 
 - JVM
 - Android
+- iOS
 
 ## Setup
 
-### Configuring dependencies
+### Add the repository
 
 ```kotlin
+maven(url = "https://maven.pkg.github.com/playmoweb/scaleway-iot-hub-sdk-kmp")
+```
 
-kotlin {
-    sourceSets {
-        commonMain {
-            dependencies {
-                implementation "com.playmoweb.iothub:<version>"
-            }
-        }
-    }
-}
+### Add dependency
 
+```kotlin
+implementation("com.playmoweb.iothub:iothub-sdk:0.1.0")
 ```
 
 ## Usage

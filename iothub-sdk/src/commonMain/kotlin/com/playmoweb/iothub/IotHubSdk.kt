@@ -1,7 +1,6 @@
 package com.playmoweb.iothub
 
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.HttpResponseValidator
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -34,7 +33,7 @@ class IotHubSdk(
         }
     }
 
-    private val httpClient = HttpClient(CIO) {
+    private val httpClient = HttpClient {
         if (debugApiResponse) {
             install(Logging) {
                 logger = Logger.DEFAULT

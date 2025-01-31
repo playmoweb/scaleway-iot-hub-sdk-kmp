@@ -4,7 +4,11 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
+    id("maven-publish")
 }
+
+group = "com.playmoweb.iothub"
+version = "0.1.0"
 
 kotlin {
     androidTarget {
@@ -25,6 +29,34 @@ kotlin {
             }
         }
 
+        commonMain {
+            dependencies {
+                implementation(libs.kotlinx.datetime)
+                implementation(libs.ktor.client.content.negotiation)
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.client.logging)
+                implementation(libs.ktor.client.serialization.kotlinx.json)
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation(libs.ktor.client.cio)
+            }
+        }
+
+        iosMain {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                implementation(libs.ktor.client.cio)
+            }
+        }
+
         commonTest {
             dependencies {
                 implementation(libs.kotlin.test)
@@ -34,17 +66,6 @@ kotlin {
         jvmTest {
             dependencies {
                 implementation(libs.kotlin.test.junit)
-            }
-        }
-
-        commonMain {
-            dependencies {
-                implementation(libs.kotlinx.datetime)
-                implementation(libs.ktor.client.cio)
-                implementation(libs.ktor.client.content.negotiation)
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.logging)
-                implementation(libs.ktor.client.serialization.kotlinx.json)
             }
         }
     }
@@ -60,3 +81,15 @@ android {
     }
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/playmoweb/scaleway-iot-hub-sdk-kmp")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
+}
