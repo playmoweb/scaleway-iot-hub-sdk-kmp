@@ -1,6 +1,6 @@
 # Scaleway IoT Hub SDK for Kotlin Multiplatform
 
-![Version](https://img.shields.io/badge/version-0.1.0-green)
+![Version](https://img.shields.io/badge/version-0.2.0-green)
 ![JVM](https://img.shields.io/badge/platform-jvm-orange)
 ![Android](https://img.shields.io/badge/platform-android-orange)
 ![iOS](https://img.shields.io/badge/platform-ios-orange)
@@ -22,7 +22,7 @@ Dependencies are hosted on Maven Central.
 ### Add dependency
 
 ```kotlin
-implementation("com.playmoweb.iothub:iothub-sdk:0.1.0")
+implementation("com.playmoweb.iothub:iothub-sdk:0.2.0")
 ```
 
 ## Usage

@@ -12,10 +12,14 @@ plugins {
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-    jvm()
+    jvm {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
     iosArm64()
     iosX64()
     iosSimulatorArm64()
@@ -75,8 +79,8 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -86,12 +90,12 @@ mavenPublishing {
     )
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
-    coordinates("com.playmoweb.iothub", "iothub-sdk", "0.1.0")
+    coordinates("com.playmoweb.iothub", "iothub-sdk", "0.2.0")
     pom {
         name.set("scaleway-iot-hub-sdk-kmp")
         description.set("A Kotlin Multiplatform SDK for interacting with Scaleway IoT Hub API.")
         inceptionYear.set("2025")
-        url.set("https://github.com/username/mylibrary/")
+        url.set("https://github.com/playmoweb/scaleway-iot-hub-sdk-kmp/")
         licenses {
             license {
                 name.set("The Apache License, Version 2.0")
