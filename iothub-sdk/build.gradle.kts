@@ -69,6 +69,7 @@ kotlin {
         jvmTest {
             dependencies {
                 implementation(libs.kotlin.test.junit)
+                implementation(libs.ktor.client.mock)
             }
         }
     }
