@@ -91,7 +91,7 @@ mavenPublishing {
     )
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
-    coordinates("com.playmoweb.iothub", "iothub-sdk", "0.2.0")
+    coordinates("com.playmoweb.iothub", "iothub-sdk", "0.3.0")
     pom {
         name.set("scaleway-iot-hub-sdk-kmp")
         description.set("A Kotlin Multiplatform SDK for interacting with Scaleway IoT Hub API.")
